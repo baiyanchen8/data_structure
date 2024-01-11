@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// ©w¸q°ïÅ|µ²ºc
+// å®šç¾©å †ç–Šçµæ§‹
 typedef struct {
-    int top;
-    int* array;
+    int top;      // å †ç–Šé ‚éƒ¨æŒ‡æ¨™
+    int* array;   // å­˜æ”¾å…ƒç´ çš„é™£åˆ—
 } Stack;
 
-// ªì©l¤Æ°ïÅ|
+// å‰µå»ºä¸€å€‹å †ç–Š
 Stack* createStack(int capacity) {
     Stack* stack = (Stack*)malloc(sizeof(Stack));
     stack->top = -1;
@@ -15,49 +15,49 @@ Stack* createStack(int capacity) {
     return stack;
 }
 
-// ÀË¬d°ïÅ|¬O§_º¡¤F
+// åˆ¤æ–·å †ç–Šæ˜¯å¦æ»¿
 int isFull(Stack* stack, int capacity) {
     return stack->top == capacity - 1;
 }
 
-// ÀË¬d°ïÅ|¬O§_¬°ªÅ
+// åˆ¤æ–·å †ç–Šæ˜¯å¦ç©º
 int isEmpty(Stack* stack) {
     return stack->top == -1;
 }
 
-// §â¤¸¯ÀÀ£¤J°ïÅ|
+// å°‡å…ƒç´ å£“å…¥å †ç–Š
 void push(Stack* stack, int item) {
     stack->array[++stack->top] = item;
 }
 
-// ±q°ïÅ|¤¤¼u¥X¤¸¯À
+// å¾å †ç–Šå½ˆå‡ºå…ƒç´ 
 int pop(Stack* stack) {
     return stack->array[stack->top--];
 }
 
-// ­pºâ«á¸mªí¹F¦¡
+// è¨ˆç®—å¾Œåºè¡¨é”å¼ï¼Œæ”¯æ´ç©ºæ ¼åˆ†éš”çš„è¼¸å…¥
 int evaluatePostfixWithWhitespace(char* exp) {
     int i;
     Stack* stack = createStack(strlen(exp));
     if (!stack)
-        return -1;  // ²§±`ª¬ªp
+        return -1;  // åˆ†é…è¨˜æ†¶é«”å¤±æ•—
 
     for (i = 0; exp[i]; ++i) {
-        // ¦pªG¬OªÅ¥Õ¡A¸õ¹L
+        // è·³éç©ºæ ¼
         if (isspace(exp[i]))
             continue;
 
-        // ¦pªG¬O¼Æ¦r¡A«hÀ£¤J°ïÅ|
+        // è™•ç†æ•¸å­—
         if (isdigit(exp[i])) {
             int num = 0;
             while (isdigit(exp[i])) {
                 num = num * 10 + (exp[i] - '0');
                 ++i;
             }
-            --i;  // ¦^°h¤@®æ¡A¦]¬°°j°é·|¦A¦Û°Ê¥[¤@
+            --i;  // å› ç‚ºè¿´åœˆæœƒå†åŠ ä¸€æ¬¡ï¼Œæ‰€ä»¥æ¸›å›å»
             push(stack, num);
         } else {
-            // ¦pªG¬O¹Bºâ¤l¡A«h±q°ïÅ|¤¤¼u¥X¨â­Ó¼Æ¦r¶i¦æ­pºâ¡A¦A±Nµ²ªGÀ£¤J°ïÅ|
+            // è™•ç†é‹ç®—ç¬¦ï¼Œå¾å †ç–Šå½ˆå‡ºå…©å€‹æ•¸å­—é€²è¡Œè¨ˆç®—ï¼Œå†å°‡çµæœå£“å›å †ç–Š
             int val1 = pop(stack);
             int val2 = pop(stack);
             switch (exp[i]) {
@@ -68,18 +68,19 @@ int evaluatePostfixWithWhitespace(char* exp) {
             }
         }
     }
-    return pop(stack);  // °ïÅ|³»³¡ªº­È§Y¬°­pºâµ²ªG
+    return pop(stack);  // å †ç–Šé ‚éƒ¨å³ç‚ºè¨ˆç®—çµæœ
 }
 
-// ´ú¸Õ­×¥¿ªº«á¸mªí¹F¦¡­pºâ
+// ä¸»å‡½å¼ï¼Œæ¥å—ä½¿ç”¨è€…è¼¸å…¥ä¸¦é€²è¡Œå¾Œåºè¡¨é”å¼çš„è¨ˆç®—
 int main() {
-    char *exp=malloc(20);
-    printf("rule \n1. ¨Ï¥Î«á¸m\n2. ¨Ï¥ÎªÅ¥Õ°Ï¤À¤£¦P¼Æ¦r\n   ex : 12 3+7* -> (12+3)*7\n3. input exit to exit\n");
-    while(strncmp(exp,"exit",4)){
-    	gets(exp);
-    	if (strncmp(exp,"exit",4))
-    		printf("«á¸mªí¹F¦¡ %s ªº­pºâµ²ªG¬O %d\n", exp, evaluatePostfixWithWhitespace(exp));
-	}
+    char *exp = malloc(20);  // åˆ†é…è¨˜æ†¶é«”ç”¨ä¾†å­˜æ”¾ä½¿ç”¨è€…è¼¸å…¥
+    printf("è¦å‰‡ \n1. è¼¸å…¥æ•¸å­—\n2. è¼¸å…¥é‹ç®—ç¬¦æ™‚è«‹åŠ ä¸Šç©ºæ ¼åˆ†éš”\n   ä¾‹å¦‚ï¼š12 3+7* -> (12+3)*7\n3. è¼¸å…¥ exit å¯çµæŸç¨‹å¼\n");
     
+    while (strncmp(exp, "exit", 4)) {
+        gets(exp);
+        if (strncmp(exp, "exit", 4))
+            printf("è¼¸å…¥è¡¨é”å¼ %s çš„è¨ˆç®—çµæœç‚º %d\n", exp, evaluatePostfixWithWhitespace(exp));
+    }
+
     return 0;
 }

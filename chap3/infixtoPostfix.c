@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-// ©w???ÌÛ
+// å®šç¾©å †ç–Šçµæ§‹
 typedef struct {
-    int top;
-    char* array;
+    int top;      // å †ç–Šé ‚éƒ¨æŒ‡æ¨™
+    char* array;  // å­˜æ”¾å…ƒç´ çš„é™£åˆ—
 } Stack;
 
-// ªì©l¤Æ?
+// å‰µå»ºä¸€å€‹å †ç–Š
 Stack* createStack(int capacity) {
     Stack* stack = (Stack*)malloc(sizeof(Stack));
     stack->top = -1;
@@ -16,32 +16,32 @@ Stack* createStack(int capacity) {
     return stack;
 }
 
-// ?¬d?¬O§_?
+// åˆ¤æ–·å †ç–Šæ˜¯å¦æ»¿
 int isFull(Stack* stack, int capacity) {
     return stack->top == capacity - 1;
 }
 
-// ?¬d?¬O§_?ªÅ
+// åˆ¤æ–·å †ç–Šæ˜¯å¦ç©º
 int isEmpty(Stack* stack) {
     return stack->top == -1;
 }
 
-// ?¤¸¯À?¤J?
+// å°‡å…ƒç´ å£“å…¥å †ç–Š
 void push(Stack* stack, char item) {
     stack->array[++stack->top] = item;
 }
 
-// ??¤¤?¥X¤¸¯À
+// å¾å †ç–Šå½ˆå‡ºå…ƒç´ 
 char pop(Stack* stack) {
     return stack->array[stack->top--];
 }
 
-// ?¨ú??¤¸¯À
+// å–å¾—å †ç–Šé ‚éƒ¨å…ƒç´ ï¼Œä¸å½ˆå‡º
 char peek(Stack* stack) {
     return stack->array[stack->top];
 }
 
-// §P??ºâ²ÅªºÉ¬¥ı?
+// å–å¾—é‹ç®—ç¬¦çš„å„ªå…ˆç´š
 int getPrecedence(char op) {
     switch (op) {
         case '+':
@@ -51,11 +51,11 @@ int getPrecedence(char op) {
         case '/':
             return 2;
         default:
-            return 0;  // ?¤_¨ä¥L¦r²Å¡A¦p¬A?µ¥¡AÉ¬¥ı??0
+            return 0;  // éé‹ç®—ç¬¦ï¼Œå„ªå…ˆç´šç‚º0
     }
 }
 
-// ¤¤?ªí?¦¡?¦Z?ªí?¦¡
+// ä¸­åºè½‰å¾Œåºè¡¨é”å¼
 char* infixToPostfix(char* infix) {
     int i, j;
     int len = strlen(infix);
@@ -73,7 +73,7 @@ char* infixToPostfix(char* infix) {
             }
             pop(stack);  
         } else { 
-        	postfix[j++]=' ';
+        	postfix[j++] = ' ';  // åŠ å…¥ç©ºæ ¼ï¼Œç”¨ä¾†å€éš”ä¸åŒçš„æ•¸å­—
             while (!isEmpty(stack) && getPrecedence(peek(stack)) >= getPrecedence(infix[i])) {
                 postfix[j++] = pop(stack);
             }
@@ -81,12 +81,12 @@ char* infixToPostfix(char* infix) {
         }
     }
 
-    // ??¤¤³Ñ§Eªº¾Ş§@²Å?¥X
+    // å°‡å †ç–Šä¸­å‰©é¤˜çš„é‹ç®—ç¬¦å½ˆå‡º
     while (!isEmpty(stack)) {
         postfix[j++] = pop(stack);
     }
 
-    postfix[j] = '\0';  // ¦b¦r²Å¦ê¥½§À²K¥[ªÅ¦r²Å
+    postfix[j] = '\0';  // åœ¨å­—ç¬¦ä¸²æœ«å°¾æ·»åŠ ç©ºå­—ç¬¦
     return postfix;
 }
 
@@ -97,12 +97,11 @@ int main() {
         gets(exp);
         if (strncmp(exp, "exit", 4)) {
             char* postfix = infixToPostfix(exp);
-            printf("«á¸mªí¹F¦¡¡G%s\n", postfix);
-            free(postfix);  // ?©ñ??¤À°tªº?¦s
+            printf("è¼¸å…¥è¡¨é”å¼ %s çš„å¾Œåºè¡¨é”å¼ç‚º %s\n", exp, postfix);
+            free(postfix);  // é‡‹æ”¾å¾Œåºè¡¨é”å¼çš„è¨˜æ†¶é«”
         }
     }
 
-    free(exp);  // ?©ñ??¤À°tªº?¦s
+    free(exp);  // é‡‹æ”¾è¼¸å…¥è¡¨é”å¼çš„è¨˜æ†¶é«”
     return 0;
 }
-
