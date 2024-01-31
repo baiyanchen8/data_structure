@@ -48,7 +48,8 @@ struct outter createSparseMatrix(int rows, int cols, int data[][3], int size) {
 		if (!ans.colum[data[i][1]]) {
 			ans.colum[data[i][1]] = new1; 
 		} else {
-			for (tmp = ans.colum[data[i][1]]; tmp->right != NULL && tmp->right->row < new1->row; tmp = tmp->right);
+			for (tmp = ans.colum[data[i][1]]; tmp->right != NULL 
+			&& tmp->right->row < new1->row; tmp = tmp->right);
 			new1->right = tmp->right;
 			tmp->right = new1;
 		} 
@@ -57,7 +58,8 @@ struct outter createSparseMatrix(int rows, int cols, int data[][3], int size) {
 		if (!ans.roww[data[i][0]]) {
 			ans.roww[data[i][0]] = new1; 
 		} else {
-			for (tmp = ans.roww[data[i][0]]; tmp->down != NULL && tmp->down->col < new1->col; tmp = tmp->down);
+			for (tmp = ans.roww[data[i][0]]; tmp->down != NULL 
+			&& tmp->down->col < new1->col; tmp = tmp->down);
 			new1->down = tmp->down;
 			tmp->down = new1;
 		} 
